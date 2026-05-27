@@ -303,9 +303,9 @@ export default function About({ onNavigate }: Props) {
                   className="p-8 border border-zinc-800 rounded-2xl bg-zinc-900/50"
                 >
                   <p className="font-mono text-zinc-500 text-xs tracking-widest mb-3">SECOND</p>
-                  <h3 className="font-display font-bold text-2xl uppercase mb-4">Spatial</h3>
+                  <h3 className="font-display font-bold text-2xl uppercase mb-4">Intrapersonal</h3>
                   <p className="text-zinc-400 leading-relaxed font-light">
-                    I think visually and in terms of space and movement. In long jump and triple jump, I'm always processing angles, distances, and body position. I understand things better when I can picture them.
+                    I spend a lot of time looking inward — reflecting on how I feel, what I want, and why I do things. I imagine scenarios, think through decisions in my head, and understand myself better than most people around me. My inner world is very active.
                   </p>
                 </motion.div>
               </div>
