@@ -1,27 +1,32 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trophy, Flag, Gauge, Mail, Instagram, MapPin } from 'lucide-react';
+import { Trophy, Mail, Instagram, MapPin } from 'lucide-react';
 import ScrollExpandMedia from './components/ui/scroll-expansion-hero';
+import About from './pages/About';
 
 export default function App() {
+  const [page, setPage] = useState<'home' | 'about'>('home');
+
+  if (page === 'about') return <About onNavigate={setPage} />;
+
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-blue-600">
-      
+
       {/* Navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 mix-blend-difference px-6 lg:px-12 py-6 flex justify-between items-center pointer-events-none">
         <a href="#hero" className="font-display font-bold text-xl tracking-wider text-white pointer-events-auto">S.CHAUD</a>
         <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase">
           <a href="#athletics" className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Athletics</a>
-          <a href="#motorsport" className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Motorsport</a>
-          <a href="#passion" className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Contact</a>
+          <button onClick={() => setPage('about')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">About</button>
         </div>
       </nav>
 
       {/* Hero Section */}
       <div id="hero" className="w-full">
         <ScrollExpandMedia
-          mediaType="image"
-          mediaSrc="https://images.unsplash.com/photo-1541443131876-44b03de101c5?q=80&w=2070"
-          bgImageSrc="https://images.unsplash.com/photo-1541443131876-44b03de101c5?q=80&w=2070"
+          mediaType="video"
+          mediaSrc="/karting-hero.mov"
+          bgImageSrc="/karting-bg.jpeg"
           title="SANTINO CHAUD"
           date="BUENOS AIRES • ARGENTINA"
           scrollToExpand="SCROLL TO START ENGINES"
@@ -75,10 +80,13 @@ export default function App() {
             </div>
             
             <div className="md:w-1/2 w-full">
-              <div className="relative aspect-[4/5] w-full max-w-lg mx-auto rounded-2xl overflow-hidden border border-zinc-800">
-                <img 
-                  src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=2070" 
-                  alt="Track Athletics" 
+              <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-zinc-800">
+                <video
+                  src="/super.mov"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
@@ -92,59 +100,28 @@ export default function App() {
         </div>
       </section>
 
-      {/* Karting Section (ScrollHero) */}
-      <div id="motorsport" className="w-full relative z-20">
-        <ScrollExpandMedia
-          mediaType="image"
-          mediaSrc="https://images.unsplash.com/photo-1534008897995-27a23e859048?q=80&w=2000"
-          bgImageSrc="https://images.unsplash.com/photo-1534008897995-27a23e859048?q=80&w=2000"
-          title="KARTING MOTORSPORT"
-          scrollToExpand="SCROLL TO ENTER PADDOCK"
-          textBlend={false}
-        >
-          <div className="w-full max-w-6xl mx-auto py-12 md:py-24">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="md:col-span-1 border-l-2 border-blue-500 pl-6 py-2">
-                <h3 className="font-display text-4xl font-black mb-4">THE PATH TO PRO</h3>
-                <p className="text-zinc-400">
-                  Karting is where champions are made. Honing race craft, tire management, and overtaking skills at the limits of grip.
-                </p>
-              </div>
-              <div className="md:col-span-2 grid grid-cols-2 gap-4">
-                <div className="bg-zinc-900/80 p-8 rounded-2xl flex flex-col justify-center items-start border border-zinc-800">
-                  <Flag className="mb-4 text-blue-500" size={32} />
-                  <p className="font-mono text-zinc-500 text-xs mb-2">OBJECTIVE</p>
-                  <p className="font-bold text-xl uppercase">Podium Finishes</p>
-                </div>
-                <div className="bg-zinc-900/80 p-8 rounded-2xl flex flex-col justify-center items-start border border-zinc-800">
-                  <Gauge className="mb-4 text-blue-500" size={32} />
-                  <p className="font-mono text-zinc-500 text-xs mb-2">PRECISION</p>
-                  <p className="font-bold text-xl uppercase">Apex Hunting</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ScrollExpandMedia>
-      </div>
 
-      {/* Passion for Cars */}
-      <section id="passion" className="py-24 px-6 lg:px-12 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-             <h2 className="text-4xl md:text-6xl font-display font-black uppercase mb-4">Automotive <span className="text-blue-500">Passion</span></h2>
-             <p className="text-zinc-400 max-w-2xl mx-auto">From engineering to aesthetics, the love for cars goes beyond the track.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 aspect-video rounded-xl overflow-hidden relative group">
-               <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=2069" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Sportscar" />
-               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
-            </div>
-            <div className="aspect-square md:aspect-auto rounded-xl overflow-hidden relative group">
-               <img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?q=80&w=2070" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Engine" />
-               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
-            </div>
-          </div>
-        </div>
+
+      {/* About CTA */}
+      <section className="w-full py-32 flex flex-col items-center justify-center text-center px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="space-y-8"
+        >
+          <p className="font-mono text-zinc-500 text-sm tracking-widest uppercase">Beyond the track</p>
+          <h2 className="text-5xl md:text-7xl font-display font-black uppercase tracking-tighter">
+            Who is <span className="text-transparent" style={{ WebkitTextStroke: '2px #fff' }}>Santino?</span>
+          </h2>
+          <button
+            onClick={() => setPage('about')}
+            className="group inline-flex items-center gap-4 px-10 py-5 bg-white text-black font-display font-black uppercase tracking-widest text-lg rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300"
+          >
+            Who Am I
+            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </button>
+        </motion.div>
       </section>
 
       {/* Footer / Contact */}

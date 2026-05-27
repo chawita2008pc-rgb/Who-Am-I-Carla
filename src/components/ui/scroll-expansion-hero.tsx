@@ -186,7 +186,7 @@ const ScrollExpandMedia = ({
                 objectPosition: 'center',
               }}
             />
-            <div className='absolute inset-0 bg-zinc-950/40 backdrop-blur-[2px]' />
+            <div className='absolute inset-0 bg-zinc-950/15 backdrop-blur-[1px]' />
           </motion.div>
 
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10 w-full'>
@@ -226,9 +226,9 @@ const ScrollExpandMedia = ({
                         style={{ pointerEvents: 'none' }}
                       ></div>
                       <motion.div
-                        className='absolute inset-0 bg-black/40 rounded-xl'
-                        initial={{ opacity: 0.7 }}
-                        animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
+                        className='absolute inset-0 bg-black/20 rounded-xl'
+                        initial={{ opacity: 0.4 }}
+                        animate={{ opacity: 0.3 - scrollProgress * 0.3 }}
                         transition={{ duration: 0.2 }}
                       />
                     </div>
@@ -252,9 +252,9 @@ const ScrollExpandMedia = ({
                       ></div>
 
                       <motion.div
-                        className='absolute inset-0 bg-black/40 rounded-xl'
-                        initial={{ opacity: 0.7 }}
-                        animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
+                        className='absolute inset-0 bg-black/20 rounded-xl'
+                        initial={{ opacity: 0.4 }}
+                        animate={{ opacity: 0.3 - scrollProgress * 0.3 }}
                         transition={{ duration: 0.2 }}
                       />
                     </div>
@@ -268,9 +268,9 @@ const ScrollExpandMedia = ({
                     />
 
                     <motion.div
-                      className='absolute inset-0 bg-black/50 rounded-xl'
-                      initial={{ opacity: 0.7 }}
-                      animate={{ opacity: 0.7 - scrollProgress * 0.3 }}
+                      className='absolute inset-0 bg-black/20 rounded-xl'
+                      initial={{ opacity: 0.4 }}
+                      animate={{ opacity: 0.4 - scrollProgress * 0.3 }}
                       transition={{ duration: 0.2 }}
                     />
                   </div>
