@@ -38,7 +38,7 @@ const intelligences = [
   { name: 'Intrapersonal',        pct: 95 },
   { name: 'Interpersonal',        pct: 60 },
   { name: 'Logical-mathematical', pct: 42 },
-  { name: 'Musical',              pct: 38 },
+  { name: 'Musical',              pct: 90 },
   { name: 'Linguistic',           pct: 28 },
 ];
 
