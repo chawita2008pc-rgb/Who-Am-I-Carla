@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Mail, Instagram } from 'lucide-react';
 
-type Page = 'home' | 'about';
+type Page = 'home' | 'about' | 'academic';
 type Section = 'about' | 'learn' | 'drives';
 
 interface Props {
-  onNavigate: (page: Page) => void;
+  onNavigate: (page: Page, section?: string) => void;
 }
 
 interface EnneagramType {
@@ -21,25 +21,25 @@ interface EnneagramType {
 }
 
 const enneagramTypes: EnneagramType[] = [
-  { num: 1, name: 'Reformer',    desire: 'Be good, right, perfect',       fear: 'Being corrupt or wrong',              shadow: 'Critical, rigid',                  gift: 'Ethical, disciplined',               isMe: false },
-  { num: 2, name: 'Helper',      desire: 'Be loved, needed',              fear: 'Being unloved or unwanted',           shadow: 'People-pleasing, possessive',       gift: 'Warm, generous',                     isMe: false },
-  { num: 3, name: 'Achiever',    desire: 'Succeed and be admired',        fear: 'Being worthless or a failure',        shadow: 'Image-obsessed, workaholic',        gift: 'Driven, adaptable, effective',       isMe: true,  note: "This is my primary type. I track PBs obsessively, always measuring myself against standards. Losing bothers me more than it should. I care how things look — my times, my results. The positive side: I'm extremely goal-oriented and I get things done." },
-  { num: 4, name: 'Individualist',desire: 'Be authentic, unique',         fear: 'Having no identity or significance', shadow: 'Moody, self-absorbed',              gift: 'Creative, deep, emotionally honest',  isMe: false },
-  { num: 5, name: 'Investigator', desire: 'Understand and be capable',    fear: 'Being useless or incompetent',        shadow: 'Detached, hoarding energy',         gift: 'Analytical, perceptive, self-sufficient', isMe: false },
-  { num: 6, name: 'Loyalist',    desire: 'Have security and support',     fear: 'Being without guidance or support',   shadow: 'Anxious, suspicious',               gift: 'Reliable, committed, courageous',    isMe: false },
-  { num: 7, name: 'Enthusiast',  desire: 'Be satisfied and free',         fear: 'Being trapped in pain or boredom',   shadow: 'Scattered, escapist',               gift: 'Spontaneous, optimistic, versatile', isMe: false },
-  { num: 8, name: 'Challenger',  desire: 'Be in control, self-reliant',   fear: 'Being controlled or violated',        shadow: 'Domineering, confrontational',      gift: 'Direct, decisive, protective',       isMe: true,  note: "Strong wing alongside Type 3. I don't wait for permission. I need autonomy. I'm direct, I don't back down, and I get frustrated when things feel out of my control. Shows up a lot in competition and in how I approach training." },
-  { num: 9, name: 'Peacemaker',  desire: 'Have peace and harmony',        fear: 'Loss of connection, conflict',        shadow: 'Avoidant, passive',                 gift: 'Calm, inclusive, patient',           isMe: false },
+  { num: 1, name: 'Reformer', desire: 'Be good, right, perfect', fear: 'Being corrupt or wrong', shadow: 'Critical, rigid', gift: 'Ethical, disciplined', isMe: false },
+  { num: 2, name: 'Helper', desire: 'Be loved, needed', fear: 'Being unloved or unwanted', shadow: 'People-pleasing, possessive', gift: 'Warm, generous', isMe: false },
+  { num: 3, name: 'Achiever', desire: 'Succeed and be admired', fear: 'Being worthless or a failure', shadow: 'Image-obsessed, workaholic', gift: 'Driven, adaptable, effective', isMe: true, note: "This is my primary type. I track PBs obsessively, always measuring myself against standards. Losing bothers me more than it should. I care how things look — my times, my results. The positive side: I'm extremely goal-oriented and I get things done." },
+  { num: 4, name: 'Individualist', desire: 'Be authentic, unique', fear: 'Having no identity or significance', shadow: 'Moody, self-absorbed', gift: 'Creative, deep, emotionally honest', isMe: false },
+  { num: 5, name: 'Investigator', desire: 'Understand and be capable', fear: 'Being useless or incompetent', shadow: 'Detached, hoarding energy', gift: 'Analytical, perceptive, self-sufficient', isMe: false },
+  { num: 6, name: 'Loyalist', desire: 'Have security and support', fear: 'Being without guidance or support', shadow: 'Anxious, suspicious', gift: 'Reliable, committed, courageous', isMe: false },
+  { num: 7, name: 'Enthusiast', desire: 'Be satisfied and free', fear: 'Being trapped in pain or boredom', shadow: 'Scattered, escapist', gift: 'Spontaneous, optimistic, versatile', isMe: false },
+  { num: 8, name: 'Challenger', desire: 'Be in control, self-reliant', fear: 'Being controlled or violated', shadow: 'Domineering, confrontational', gift: 'Direct, decisive, protective', isMe: true, note: "Strong wing alongside Type 3. I don't wait for permission. I need autonomy. I'm direct, I don't back down, and I get frustrated when things feel out of my control. Shows up a lot in competition and in how I approach training." },
+  { num: 9, name: 'Peacemaker', desire: 'Have peace and harmony', fear: 'Loss of connection, conflict', shadow: 'Avoidant, passive', gift: 'Calm, inclusive, patient', isMe: false },
 ];
 
 const intelligences = [
-  { name: 'Bodily-kinesthetic',   pct: 95 },
-  { name: 'Spatial',              pct: 78 },
-  { name: 'Intrapersonal',        pct: 95 },
-  { name: 'Interpersonal',        pct: 60 },
+  { name: 'Bodily-kinesthetic', pct: 95 },
+  { name: 'Spatial', pct: 78 },
+  { name: 'Intrapersonal', pct: 95 },
+  { name: 'Interpersonal', pct: 60 },
   { name: 'Logical-mathematical', pct: 42 },
-  { name: 'Musical',              pct: 38 },
-  { name: 'Linguistic',           pct: 28 },
+  { name: 'Musical', pct: 90 },
+  { name: 'Linguistic', pct: 28 },
 ];
 
 const questions = [
@@ -58,8 +58,8 @@ const questions = [
 ];
 
 const tabs: { id: Section; label: string }[] = [
-  { id: 'about',  label: 'About me' },
-  { id: 'learn',  label: 'How I learn' },
+  { id: 'about', label: 'About me' },
+  { id: 'learn', label: 'How I learn' },
   { id: 'drives', label: 'What drives me' },
 ];
 
@@ -86,12 +86,30 @@ export default function About({ onNavigate }: Props) {
           S.CHAUD
         </button>
         <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase">
-          <button onClick={() => onNavigate('home')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">
-            Home
+          <button onClick={() => onNavigate('home', 'athletics')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">
+            Athletics
           </button>
           <span className="pointer-events-auto text-blue-400">About</span>
+          <button onClick={() => onNavigate('academic')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">
+            Academic & Career
+          </button>
         </div>
       </nav>
+
+      {/* Mobile Navigation bar */}
+      <div className="md:hidden fixed top-0 left-0 w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+        <button
+          onClick={() => onNavigate('home')}
+          className="font-display font-bold text-lg tracking-wider text-white"
+        >
+          S.CHAUD
+        </button>
+        <div className="flex gap-4 text-xs font-medium tracking-wider uppercase">
+          <button onClick={() => onNavigate('home', 'athletics')} className="text-zinc-400 hover:text-white">Athletics</button>
+          <span className="text-blue-400 font-bold">About</span>
+          <button onClick={() => onNavigate('academic')} className="text-zinc-400 hover:text-white">Academic</button>
+        </div>
+      </div>
 
       {/* ── Page Header ── */}
       <div className="pt-32 pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
@@ -112,11 +130,10 @@ export default function About({ onNavigate }: Props) {
             <button
               key={tab.id}
               onClick={() => handleTab(tab.id)}
-              className={`px-5 py-2 rounded-full text-sm font-mono tracking-widest uppercase transition-all border ${
-                activeSection === tab.id
-                  ? 'border-blue-500/50 bg-blue-500/10 text-blue-400'
-                  : 'border-zinc-800 text-zinc-500 hover:text-white hover:border-zinc-600'
-              }`}
+              className={`px-5 py-2 rounded-full text-sm font-mono tracking-widest uppercase transition-all border ${activeSection === tab.id
+                ? 'border-blue-500/50 bg-blue-500/10 text-blue-400'
+                : 'border-zinc-800 text-zinc-500 hover:text-white hover:border-zinc-600'
+                }`}
             >
               {tab.label}
             </button>
@@ -271,9 +288,8 @@ export default function About({ onNavigate }: Props) {
                         whileInView={{ width: `${intel.pct}%` }}
                         viewport={{ once: true }}
                         transition={{ duration: 1.2, ease: 'easeOut', delay: idx * 0.09 + 0.2 }}
-                        className={`h-full rounded-full ${
-                          intel.pct >= 70 ? 'bg-blue-500' : intel.pct >= 50 ? 'bg-blue-500/60' : 'bg-zinc-600'
-                        }`}
+                        className={`h-full rounded-full ${intel.pct >= 70 ? 'bg-blue-500' : intel.pct >= 50 ? 'bg-blue-500/60' : 'bg-zinc-600'
+                          }`}
                       />
                     </div>
                     <span className="font-mono text-sm font-bold text-zinc-400 w-10 text-right">{intel.pct}%</span>
@@ -303,9 +319,9 @@ export default function About({ onNavigate }: Props) {
                   className="p-8 border border-zinc-800 rounded-2xl bg-zinc-900/50"
                 >
                   <p className="font-mono text-zinc-500 text-xs tracking-widest mb-3">SECOND</p>
-                  <h3 className="font-display font-bold text-2xl uppercase mb-4">Spatial</h3>
+                  <h3 className="font-display font-bold text-2xl uppercase mb-4">Intrapersonal</h3>
                   <p className="text-zinc-400 leading-relaxed font-light">
-                    I think visually and in terms of space and movement. In long jump and triple jump, I'm always processing angles, distances, and body position. I understand things better when I can picture them.
+                    I spend a lot of time looking inward — reflecting on how I feel, what I want, and why I do things. I imagine scenarios, think through decisions in my head, and understand myself better than most people around me. My inner world is very active.
                   </p>
                 </motion.div>
               </div>
@@ -361,11 +377,10 @@ export default function About({ onNavigate }: Props) {
                     onClick={() => setSelectedType(selectedType === type.num ? null : type.num)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
-                    className={`p-4 md:p-6 rounded-xl border text-left transition-all cursor-pointer ${
-                      type.isMe
-                        ? 'border-blue-500/40 bg-blue-500/10 hover:border-blue-500/70'
-                        : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-600'
-                    } ${selectedType === type.num ? 'ring-1 ring-blue-400 border-blue-400/50' : ''}`}
+                    className={`p-4 md:p-6 rounded-xl border text-left transition-all cursor-pointer ${type.isMe
+                      ? 'border-blue-500/40 bg-blue-500/10 hover:border-blue-500/70'
+                      : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-600'
+                      } ${selectedType === type.num ? 'ring-1 ring-blue-400 border-blue-400/50' : ''}`}
                   >
                     <p className="font-mono text-zinc-500 text-xs mb-2">{String(type.num).padStart(2, '0')}</p>
                     <p className="font-display font-bold text-sm md:text-base uppercase">{type.name}</p>
@@ -385,11 +400,10 @@ export default function About({ onNavigate }: Props) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className={`p-8 rounded-2xl border ${
-                      selectedTypeData.isMe
-                        ? 'border-blue-500/40 bg-blue-500/5'
-                        : 'border-zinc-800 bg-zinc-900/50'
-                    }`}
+                    className={`p-8 rounded-2xl border ${selectedTypeData.isMe
+                      ? 'border-blue-500/40 bg-blue-500/5'
+                      : 'border-zinc-800 bg-zinc-900/50'
+                      }`}
                   >
                     {/* Type name */}
                     <div className="mb-8">
@@ -408,9 +422,9 @@ export default function About({ onNavigate }: Props) {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                       {[
                         { label: 'CORE DESIRE', value: selectedTypeData.desire },
-                        { label: 'CORE FEAR',   value: selectedTypeData.fear },
-                        { label: 'GIFT',         value: selectedTypeData.gift },
-                        { label: 'SHADOW SIDE',  value: selectedTypeData.shadow },
+                        { label: 'CORE FEAR', value: selectedTypeData.fear },
+                        { label: 'GIFT', value: selectedTypeData.gift },
+                        { label: 'SHADOW SIDE', value: selectedTypeData.shadow },
                       ].map((item, idx) => (
                         <div key={idx} className="p-4 border border-zinc-800 rounded-xl bg-zinc-900/60">
                           <p className="font-mono text-zinc-500 text-xs mb-2 tracking-widest">{item.label}</p>

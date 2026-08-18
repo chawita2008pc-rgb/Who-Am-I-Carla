@@ -3,11 +3,25 @@ import { motion } from 'framer-motion';
 import { Trophy, Mail, Instagram, MapPin } from 'lucide-react';
 import ScrollExpandMedia from './components/ui/scroll-expansion-hero';
 import About from './pages/About';
+import AcademicCareer from './pages/AcademicCareer';
 
 export default function App() {
-  const [page, setPage] = useState<'home' | 'about'>('home');
+  const [page, setPage] = useState<'home' | 'about' | 'academic'>('home');
 
-  if (page === 'about') return <About onNavigate={setPage} />;
+  const handleNavigate = (targetPage: 'home' | 'about' | 'academic', section?: string) => {
+    setPage(targetPage);
+    if (section) {
+      setTimeout(() => {
+        const el = document.getElementById(section);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  if (page === 'about') return <About onNavigate={handleNavigate} />;
+  if (page === 'academic') return <AcademicCareer onNavigate={handleNavigate} />;
 
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-blue-600">
@@ -17,9 +31,20 @@ export default function App() {
         <a href="#hero" className="font-display font-bold text-xl tracking-wider text-white pointer-events-auto">S.CHAUD</a>
         <div className="hidden md:flex gap-8 text-sm font-medium tracking-widest uppercase">
           <a href="#athletics" className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Athletics</a>
-          <button onClick={() => setPage('about')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">About</button>
+          <button onClick={() => handleNavigate('about')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">About</button>
+          <button onClick={() => handleNavigate('academic')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Academic & Career</button>
         </div>
       </nav>
+
+      {/* Mobile Navbar */}
+      <div className="md:hidden fixed top-0 left-0 w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+        <a href="#hero" className="font-display font-bold text-lg tracking-wider text-white">S.CHAUD</a>
+        <div className="flex gap-4 text-xs font-medium tracking-wider uppercase">
+          <a href="#athletics" className="text-zinc-400 hover:text-white">Athletics</a>
+          <button onClick={() => handleNavigate('about')} className="text-zinc-400 hover:text-white">About</button>
+          <button onClick={() => handleNavigate('academic')} className="text-zinc-400 hover:text-white">Academic</button>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <div id="hero" className="w-full">
@@ -38,7 +63,7 @@ export default function App() {
               <span className="font-bold text-white italic">and on the tarmac.</span>
             </h2>
             <p className="text-lg md:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto font-light">
-              Athletics (100m, 200m, Long Jump, Triple Jump) & Karting. <br/> 
+              Athletics (100m, 200m, Long Jump, Triple Jump) & Karting. <br />
               Staying elite fit to break records and jump gears into the motorsport world.
             </p>
           </div>
@@ -51,7 +76,7 @@ export default function App() {
         <div className="container mx-auto px-6 lg:px-12 relative z-10">
           <div className="flex flex-col md:flex-row gap-16 items-center">
             <div className="md:w-1/2">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -67,7 +92,7 @@ export default function App() {
                 <p className="text-zinc-400 text-lg leading-relaxed font-light">
                   Training for explosive speed and vertical power. Specializing in sprints and jumps, transforming athletic conditioning into split-second reaction times behind the wheel.
                 </p>
-                
+
                 <div className="grid grid-cols-2 gap-4 mt-8">
                   {['100M DASH', '200M DASH', 'LONG JUMP', 'TRIPLE JUMP'].map((event, idx) => (
                     <div key={idx} className="p-4 border border-zinc-800 rounded-xl bg-zinc-900/50 backdrop-blur-sm">
@@ -78,7 +103,7 @@ export default function App() {
                 </div>
               </motion.div>
             </div>
-            
+
             <div className="md:w-1/2 w-full">
               <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-zinc-800">
                 <video
@@ -100,28 +125,58 @@ export default function App() {
         </div>
       </section>
 
-
-
-      {/* About CTA */}
+      {/* Exploration CTAs */}
       <section className="w-full py-32 flex flex-col items-center justify-center text-center px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
-          <p className="font-mono text-zinc-500 text-sm tracking-widest uppercase">Beyond the track</p>
-          <h2 className="text-5xl md:text-7xl font-display font-black uppercase tracking-tighter">
-            Who is <span className="text-transparent" style={{ WebkitTextStroke: '2px #fff' }}>Santino?</span>
-          </h2>
-          <button
-            onClick={() => setPage('about')}
-            className="group inline-flex items-center gap-4 px-10 py-5 bg-white text-black font-display font-black uppercase tracking-widest text-lg rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300"
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-10 border border-zinc-800 rounded-3xl bg-zinc-900/40 backdrop-blur-sm space-y-6 text-left flex flex-col justify-between"
           >
-            Who Am I
-            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </button>
-        </motion.div>
+            <div className="space-y-4">
+              <p className="font-mono text-zinc-500 text-xs tracking-widest uppercase">Beyond the track</p>
+              <h2 className="text-4xl font-display font-black uppercase tracking-tighter">
+                Who is <span className="text-transparent" style={{ WebkitTextStroke: '1.5px #fff' }}>Santino?</span>
+              </h2>
+              <p className="text-zinc-400 text-sm font-light leading-relaxed">
+                Exploring mindset, intelligence profiles, enneagram drives, and athletic training philosophy.
+              </p>
+            </div>
+            <button
+              onClick={() => handleNavigate('about')}
+              className="group inline-flex items-center justify-between px-8 py-4 bg-white text-black font-display font-bold uppercase tracking-widest text-sm rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 w-full cursor-pointer"
+            >
+              Who Am I
+              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="p-10 border border-blue-500/30 rounded-3xl bg-blue-500/5 backdrop-blur-sm space-y-6 text-left flex flex-col justify-between"
+          >
+            <div className="space-y-4">
+              <p className="font-mono text-blue-400 text-xs tracking-widest uppercase">Future & Vision</p>
+              <h2 className="text-4xl font-display font-black uppercase tracking-tighter">
+                Academic & <span className="text-transparent" style={{ WebkitTextStroke: '1.5px #fff' }}>Career.</span>
+              </h2>
+              <p className="text-zinc-400 text-sm font-light leading-relaxed">
+                Discovering business, motorsport, technology, entrepreneurship, and paddock insights with Junior.
+              </p>
+            </div>
+            <button
+              onClick={() => handleNavigate('academic')}
+              className="group inline-flex items-center justify-between px-8 py-4 bg-blue-500 text-white font-display font-bold uppercase tracking-widest text-sm rounded-full hover:bg-white hover:text-black transition-all duration-300 w-full cursor-pointer"
+            >
+              Academic & Career
+              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </button>
+          </motion.div>
+        </div>
       </section>
 
       {/* Footer / Contact */}
@@ -133,7 +188,7 @@ export default function App() {
               <MapPin size={16} /> Buenos Aires, Argentina
             </p>
           </div>
-          
+
           <div className="flex gap-6">
             <a href="#" className="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black hover:border-white transition-all">
               <Instagram size={20} />
