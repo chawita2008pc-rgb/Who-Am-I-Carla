@@ -4,11 +4,12 @@ import { Trophy, Mail, Instagram, MapPin } from 'lucide-react';
 import ScrollExpandMedia from './components/ui/scroll-expansion-hero';
 import About from './pages/About';
 import AcademicCareer from './pages/AcademicCareer';
+import RealWorldExperience from './pages/RealWorldExperience';
 
 export default function App() {
-  const [page, setPage] = useState<'home' | 'about' | 'academic'>('home');
+  const [page, setPage] = useState<'home' | 'about' | 'academic' | 'experience'>('home');
 
-  const handleNavigate = (targetPage: 'home' | 'about' | 'academic', section?: string) => {
+  const handleNavigate = (targetPage: 'home' | 'about' | 'academic' | 'experience', section?: string) => {
     setPage(targetPage);
     if (section) {
       setTimeout(() => {
@@ -22,6 +23,7 @@ export default function App() {
 
   if (page === 'about') return <About onNavigate={handleNavigate} />;
   if (page === 'academic') return <AcademicCareer onNavigate={handleNavigate} />;
+  if (page === 'experience') return <RealWorldExperience onNavigate={handleNavigate} />;
 
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-blue-600">
@@ -33,6 +35,7 @@ export default function App() {
           <a href="#athletics" className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Athletics</a>
           <button onClick={() => handleNavigate('about')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">About</button>
           <button onClick={() => handleNavigate('academic')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Academic & Career</button>
+          <button onClick={() => handleNavigate('experience')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">Experience</button>
         </div>
       </nav>
 
@@ -43,6 +46,7 @@ export default function App() {
           <a href="#athletics" className="text-zinc-400 hover:text-white">Athletics</a>
           <button onClick={() => handleNavigate('about')} className="text-zinc-400 hover:text-white">About</button>
           <button onClick={() => handleNavigate('academic')} className="text-zinc-400 hover:text-white">Academic</button>
+          <button onClick={() => handleNavigate('experience')} className="text-zinc-400 hover:text-white">Experience</button>
         </div>
       </div>
 
@@ -127,7 +131,7 @@ export default function App() {
 
       {/* Exploration CTAs */}
       <section className="w-full py-32 flex flex-col items-center justify-center text-center px-6">
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl w-full">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -173,6 +177,31 @@ export default function App() {
               className="group inline-flex items-center justify-between px-8 py-4 bg-blue-500 text-white font-display font-bold uppercase tracking-widest text-sm rounded-full hover:bg-white hover:text-black transition-all duration-300 w-full cursor-pointer"
             >
               Academic & Career
+              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+            </button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="p-10 border border-zinc-800 rounded-3xl bg-zinc-900/40 backdrop-blur-sm space-y-6 text-left flex flex-col justify-between"
+          >
+            <div className="space-y-4">
+              <p className="font-mono text-zinc-500 text-xs tracking-widest uppercase">Out in the field</p>
+              <h2 className="text-4xl font-display font-black uppercase tracking-tighter">
+                Real World <span className="text-transparent" style={{ WebkitTextStroke: '1.5px #fff' }}>Experience.</span>
+              </h2>
+              <p className="text-zinc-400 text-sm font-light leading-relaxed">
+                My internship in an architecture business, what I observed on site, and what it taught me about myself.
+              </p>
+            </div>
+            <button
+              onClick={() => handleNavigate('experience')}
+              className="group inline-flex items-center justify-between px-8 py-4 bg-white text-black font-display font-bold uppercase tracking-widest text-sm rounded-full hover:bg-blue-500 hover:text-white transition-all duration-300 w-full cursor-pointer"
+            >
+              Real World Experience
               <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
             </button>
           </motion.div>

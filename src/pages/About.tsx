@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Mail, Instagram } from 'lucide-react';
 
-type Page = 'home' | 'about' | 'academic';
+type Page = 'home' | 'about' | 'academic' | 'experience';
 type Section = 'about' | 'learn' | 'drives';
 
 interface Props {
@@ -93,6 +93,9 @@ export default function About({ onNavigate }: Props) {
           <button onClick={() => onNavigate('academic')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">
             Academic & Career
           </button>
+          <button onClick={() => onNavigate('experience')} className="cursor-pointer pointer-events-auto hover:text-blue-400 transition-colors">
+            Experience
+          </button>
         </div>
       </nav>
 
@@ -108,6 +111,7 @@ export default function About({ onNavigate }: Props) {
           <button onClick={() => onNavigate('home', 'athletics')} className="text-zinc-400 hover:text-white">Athletics</button>
           <span className="text-blue-400 font-bold">About</span>
           <button onClick={() => onNavigate('academic')} className="text-zinc-400 hover:text-white">Academic</button>
+          <button onClick={() => onNavigate('experience')} className="text-zinc-400 hover:text-white">Experience</button>
         </div>
       </div>
 
